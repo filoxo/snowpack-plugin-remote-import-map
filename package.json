@@ -1,5 +1,5 @@
 {
-  "name": "snowpack-plugin-remote-import-map", 
+  "name": "snowpack-plugin-remote-import-map",
   "version": "1.0.0",
   "files": [
     "pkg/"
@@ -24,6 +24,7 @@
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
+    "@types/node": "^14.14.10",
     "snowpack": "^2.6.4",
     "typescript": "^3.9.7"
   }
