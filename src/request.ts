@@ -31,7 +31,14 @@ export const requestJSON = (url: string) => {
           rawData += chunk;
         });
         res.on("end", () => {
+          let data;
+          try {
+            data = JSON.parse(rawData);
             cache[url] = data;
+            resolve(data);
+          } catch (e) {
+            reject(`Failed to parse response from ${url}: ${e}`);
+          }
         });
       });
       req.on("error", (err) => {
