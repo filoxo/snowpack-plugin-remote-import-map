@@ -18,4 +18,4 @@ See also [snowpack-plugin-import-map](https://github.com/zhoukekestar/snowpack-p
 
 ### Testing
 
-// TODO 😬
+Run `yarn test`
