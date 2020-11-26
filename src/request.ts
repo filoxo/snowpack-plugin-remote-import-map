@@ -1,4 +1,4 @@
-import * as url from "url";
+import { parse } from "url";
 import * as http from "http";
 import * as https from "https";
 
@@ -13,11 +13,11 @@ export type ImportMap = {
 const method = "GET";
 const cache: { [key: string]: ImportMap } = {};
 
-export const requestJSON = (pathToSpec: string) => {
-  const { protocol, hostname, port, path } = url.parse(pathToSpec);
+export const requestJSON = (url: string) => {
+  const { protocol, hostname, port, path } = parse(url);
   const { request } = protocol === "https" ? https : http;
 
-  if (!cache[pathToSpec]) {
+  if (!cache[url]) {
     return new Promise<ImportMap>((resolve, reject) => {
       const req = request({
         method,
@@ -31,9 +31,7 @@ export const requestJSON = (pathToSpec: string) => {
           rawData += chunk;
         });
         res.on("end", () => {
-          const data = JSON.parse(rawData);
-          cache[pathToSpec] = data;
-          resolve(data);
+            cache[url] = data;
         });
       });
       req.on("error", (err) => {
@@ -43,5 +41,5 @@ export const requestJSON = (pathToSpec: string) => {
     });
   }
 
-  return Promise.resolve(cache[pathToSpec]);
+  return Promise.resolve(cache[url]);
 };
