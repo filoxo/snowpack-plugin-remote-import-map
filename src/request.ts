@@ -19,6 +19,8 @@ export const requestJSON = (url: string) => {
 
   if (!cache[url]) {
     return new Promise<ImportMap>((resolve, reject) => {
+      // TODO: ensure response has MIME type of application/importmap+json per spec https://github.com/WICG/import-maps#installation
+      // Maybe as a `strict: true` option.
       const req = request({
         method,
         hostname,
