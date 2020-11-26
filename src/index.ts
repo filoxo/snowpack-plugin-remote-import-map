@@ -1,4 +1,4 @@
-import type { SnowpackPlugin, SnowpackPluginFactory } from "snowpack/lib/index";
+import type { SnowpackPlugin } from "snowpack/lib/index";
 import type { Imports } from "./request";
 import { transformEsmImports } from "snowpack/lib/rewrite-imports";
 import { requestJSON } from "./request";
@@ -8,12 +8,12 @@ interface PluginOptions {
     prod: string;
     dev?: string;
   } | undefined;
-  extensions: string[];
+  extensions?: string[];
 }
 
-const plugin: SnowpackPluginFactory = (
-  _snowpackConfig,
-  pluginOptions,
+const plugin = (
+  _snowpackConfig: any,
+  pluginOptions: PluginOptions,
 ): SnowpackPlugin => {
   const { url, extensions = [".js", ".jsx", ".tsx", ".ts"] } =
     pluginOptions as PluginOptions;
