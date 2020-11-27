@@ -8,12 +8,12 @@ See also [snowpack-plugin-import-map](https://github.com/zhoukekestar/snowpack-p
 
 ## Development
 
-1. clone repo
-1. run `yarn install`
-1. Link project locally `yarn build && cd pkg && yalc publish --push && cd ..`
-   - TODO: Find a better way to publish only contents of pkg folder
+1. Clone repo
+1. Run `yarn install`
+1. Build project `yarn build`
+1. Link project locally `yarn link-pkg`
 1. Serve local import map `yarn serve:import-map`
-1. Install in test project `yalc add snowpack-plugin-remote-import-map`
+1. Install in test project `yarn link snowpack-plugin-remote-import-map`
 1. Start test project `yarn start`
 
 ### Testing

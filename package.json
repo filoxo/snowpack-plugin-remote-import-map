@@ -10,7 +10,8 @@
     "deploy": "pika publish",
     "version": "npm run build",
     "serve:import-map": "npx serve -d local",
-    "test": "jest"
+    "test": "jest",
+    "link-pkg": "yarn --cwd pkg link"
   },
   "@pika/pack": {
     "pipeline": [
