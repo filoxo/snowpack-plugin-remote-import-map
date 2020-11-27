@@ -1,9 +1,6 @@
 {
   "name": "snowpack-plugin-remote-import-map",
   "version": "1.0.0",
-  "files": [
-    "pkg/"
-  ],
   "license": "MIT",
   "scripts": {
     "build": "pika build",
