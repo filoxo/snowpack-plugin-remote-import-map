@@ -78,10 +78,40 @@ import rxjs from 'rxjs';
       isHmrEnabled: false,
     };
 
-    expect(false);
     const result = await transform(testFile);
 
     expect(result).toEqual(testFile.contents);
+  } else {
+    fail("transform is falsy!");
+  }
+});
+
+test("throws if requestJSON rejects", async () => {
+  const { transform } = remoteImportMapPlugin({}, {
+    url: {
+      prod:
+        "reject",
+    },
+  });
+
+  if (transform) {
+    const testFile = {
+      id: "testFile",
+      contents: `
+import React from 'react';
+import rxjs from 'rxjs';
+`,
+      fileExt: ".js",
+      isDev: false,
+      isHmrEnabled: false,
+    };
+
+    try {
+      await transform(testFile)
+    } catch(e) {
+      expect(e.message).toContain('snowpack-plugin-remote-import-map failed')
+    }
+
   } else {
     fail("transform is falsy!");
   }
