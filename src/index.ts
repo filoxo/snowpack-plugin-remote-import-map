@@ -3,7 +3,7 @@ import type { Imports } from "./request";
 import { transformEsmImports } from "snowpack/lib/rewrite-imports";
 import { requestJSON } from "./request";
 
-interface PluginOptions {
+type PluginOptions = {
   url: string,
   devUrl?: string,
   extensions?: string[]
