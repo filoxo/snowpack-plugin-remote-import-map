@@ -14,7 +14,7 @@ npm i -S snowpack-plugin-remote-import-map
 
 ### Configuration
 
-In your _snowpack.config.js_ file, add the plugin along with the prod url.
+In your _snowpack.config.js_ file, add the plugin along with [options](#options).
 
 ```js
   plugins: [
@@ -22,8 +22,7 @@ In your _snowpack.config.js_ file, add the plugin along with the prod url.
       "snowpack-plugin-remote-import-map",
       {
         url: "https://your-org.com/import-map.json",
-        devUrl: "https://your-org.com/import-map.dev.json",
-        extensions: [".ts", ".js"]
+        devUrl: "https://your-org.com/import-map.dev.json"
       },
     ],
     ...
@@ -31,6 +30,14 @@ In your _snowpack.config.js_ file, add the plugin along with the prod url.
 ```
 
 After this, run your project's start command. This plugin will download the importmap on start, and replace the import URLs that match in the import map.
+
+### Options
+
+| name       | type     | default                          | description                                                                                                  |
+| ---------- | -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| url        | string   | (required)                       | URL string where the remote import map will be loaded from                                                   |
+| devUrl     | string   | `undefined`                      | URL string where the dev version of the remote import map will be loaded from in `devMode` only              |
+| extensions | string[] | `[".js", ".jsx", ".tsx", ".ts"]` | [Snowpack file extensions](https://www.snowpack.dev/guides/plugins#tips-%2F-gotchas) to run the transform on |
 
 #### Alternatives
 
