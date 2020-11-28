@@ -21,9 +21,9 @@ In your _snowpack.config.js_ file, add the plugin along with the prod url.
     [
       "snowpack-plugin-remote-import-map",
       {
-        url: {
-          prod: "https://your-org.com/import-map.json",
-        },
+        url: "https://your-org.com/import-map.json",
+        devUrl: "https://your-org.com/import-map.dev.json",
+        extensions: [".ts", ".js"]
       },
     ],
     ...

@@ -22,10 +22,8 @@ const getTransformResult = async (env: string | [string, string], testFile: any)
     prod = env;
   }
   const transform = remoteImportMapPlugin(null, {
-    url: {
-      prod,
-      dev
-    },
+    url: prod,
+    devUrl: dev
   }).transform!;
 
   expect(transform).toBeTruthy();

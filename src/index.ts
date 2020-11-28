@@ -4,10 +4,8 @@ import { transformEsmImports } from "snowpack/lib/rewrite-imports";
 import { requestJSON } from "./request";
 
 interface PluginOptions {
-  url: {
-    prod: string;
-    dev?: string;
-  }, 
+  url: string,
+  devUrl?: string,
   extensions?: string[]
 }
 
@@ -17,13 +15,13 @@ const plugin = (
   _snowpackConfig: any,
   pluginOptions: PluginOptions,
 ): SnowpackPlugin => {
-  const { url, extensions = [".js", ".jsx", ".tsx", ".ts"] } =
+  const { url, devUrl, extensions = [".js", ".jsx", ".tsx", ".ts"] } =
     pluginOptions;
   return {
     name,
     async transform({ contents, fileExt, isDev }) {
       contents = contents.toString();
-      const remoteImportMapUrl = isDev && url?.dev ? url.dev : url.prod;
+      const remoteImportMapUrl = isDev && devUrl ? devUrl : url;
       let remoteImports: Imports = {};
 
       try {
