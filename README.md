@@ -2,7 +2,37 @@
 
 **This project is still a WIP.** [Import maps can be loaded from an external source](https://github.com/WICG/import-maps#installation). This plugin will load that remote import map and rewrite the local imports to use those URLs that match.
 
-## Alternatives
+## Usage
+
+### Install
+
+```sh
+yarn add -D snowpack-plugin-remote-import-map
+# or
+npm i -S snowpack-plugin-remote-import-map
+```
+
+### Configuration
+
+In your _snowpack.config.js_ file, add the plugin along with the prod url.
+
+```js
+  plugins: [
+    [
+      "snowpack-plugin-remote-import-map",
+      {
+        url: {
+          prod: "https://your-org.com/import-map.json",
+        },
+      },
+    ],
+    ...
+  ],
+```
+
+After this, run your project's start command. This plugin will download the importmap on start, and replace the import URLs that match in the import map.
+
+#### Alternatives
 
 See also [snowpack-plugin-import-map](https://github.com/zhoukekestar/snowpack-plugin-import-map).
 
