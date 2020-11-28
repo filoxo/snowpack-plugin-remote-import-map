@@ -1,6 +1,6 @@
 import remoteImportMapPlugin from "./index";
 
-const testImportMap = {
+const testProdImportMap = {
   imports: {
     react: "https://some.cdn.com/react.js",
     rxjs: "https://some.cdn.com/rx.js",
@@ -31,7 +31,7 @@ jest.mock("./request", () => {
     requestJSON: jest.fn((url) => {
       switch (true) {
         case url === "prod":
-          return Promise.resolve(testImportMap);
+          return Promise.resolve(testProdImportMap);
         case url === "dev":
           return Promise.resolve(testDevImportMap);
         default:
@@ -56,9 +56,9 @@ import rxjs from 'rxjs';
   };
   const result = await getTransformResult("prod", testFile);
   expect(result).not.toContain("'react'");
-  expect(result).toContain(testImportMap.imports.react);
+  expect(result).toContain(testProdImportMap.imports.react);
   expect(result).not.toContain("'rxjs'");
-  expect(result).toContain(testImportMap.imports.rxjs);
+  expect(result).toContain(testProdImportMap.imports.rxjs);
 });
 
 test("preserves file with unmatched extension as-is", async () => {
