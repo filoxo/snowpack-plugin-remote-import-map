@@ -103,6 +103,22 @@ import rxjs from 'rxjs';
   expect(result).toEqual(testFile.contents);
 });
 
+test("replaces only imports that are in the import map", async () => {
+  const testFile = {
+    id: "testFile",
+    contents: `
+import React from 'react';
+import _ from 'lodash';
+`,
+    fileExt: ".js",
+    isDev: false,
+    isHmrEnabled: false,
+  };
+  const result = await getTransformResult("prod", testFile);
+  expect(result).toContain(testProdImportMap.imports.react);
+  expect(result).toContain(`'lodash'`);
+});
+
 test("throws if requestJSON rejects", async () => {
   try {
     const testFile = {
