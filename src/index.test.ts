@@ -14,31 +14,36 @@ const testDevImportMap = {
   },
 };
 
+const getTransformResult = async (env: string, testFile: any) => {
+  const transform = remoteImportMapPlugin(null, {
+    url: {
+      prod: env,
+    },
+  }).transform!;
+
+  expect(transform).toBeTruthy();
+  return await transform(testFile);
+};
+
 jest.mock("./request", () => {
   return {
     __esModule: true,
     requestJSON: jest.fn((url) => {
-      switch(true) {
-        case url === 'prod': return Promise.resolve(testImportMap)
-        case url === 'dev': return Promise.resolve(testDevImportMap)
-        default: return Promise.reject(
-          "Something went wrong with the provided url to mocked requestJSON",
-        )
+      switch (true) {
+        case url === "prod":
+          return Promise.resolve(testImportMap);
+        case url === "dev":
+          return Promise.resolve(testDevImportMap);
+        default:
+          return Promise.reject(
+            "Something went wrong with the provided url to mocked requestJSON",
+          );
       }
-    }
-    ),
+    }),
   };
 });
 
 test("successfully replaces matching file with remote import map urls", async () => {
-  const { transform } = remoteImportMapPlugin({}, {
-    url: {
-      prod: "prod",
-    },
-  });
-
-  expect(transform).toBeTruthy();
-
   const testFile = {
     id: "testFile",
     contents: `
@@ -49,9 +54,7 @@ import rxjs from 'rxjs';
     isDev: false,
     isHmrEnabled: false,
   };
-
-  const result = transform && await transform(testFile);
-
+  const result = await getTransformResult("prod", testFile);
   expect(result).not.toContain("'react'");
   expect(result).toContain(testImportMap.imports.react);
   expect(result).not.toContain("'rxjs'");
@@ -59,60 +62,35 @@ import rxjs from 'rxjs';
 });
 
 test("preserves file with unmatched extension as-is", async () => {
-  const { transform } = remoteImportMapPlugin({}, {
-    url: {
-      prod:
-        "prod",
-    },
-  });
-
-  if (transform) {
-    const testFile = {
-      id: "testFile",
-      contents: `
+  const testFile = {
+    id: "testFile",
+    contents: `
 import React from 'react';
 import rxjs from 'rxjs';
 `,
-      fileExt: ".mjs",
-      isDev: false,
-      isHmrEnabled: false,
-    };
-
-    const result = await transform(testFile);
-
-    expect(result).toEqual(testFile.contents);
-  } else {
-    fail("transform is falsy!");
-  }
+    fileExt: ".mjs",
+    isDev: false,
+    isHmrEnabled: false,
+  };
+  const result = await getTransformResult("prod", testFile);
+  expect(result).toEqual(testFile.contents);
 });
 
 test("throws if requestJSON rejects", async () => {
-  const { transform } = remoteImportMapPlugin({}, {
-    url: {
-      prod:
-        "reject",
-    },
-  });
-
-  if (transform) {
+  try {
     const testFile = {
       id: "testFile",
       contents: `
 import React from 'react';
 import rxjs from 'rxjs';
-`,
+  `,
       fileExt: ".js",
       isDev: false,
       isHmrEnabled: false,
     };
 
-    try {
-      await transform(testFile)
-    } catch(e) {
-      expect(e.message).toContain('snowpack-plugin-remote-import-map failed')
-    }
-
-  } else {
-    fail("transform is falsy!");
+    await getTransformResult("reject", testFile);
+  } catch (e) {
+    expect(e.message).toContain("snowpack-plugin-remote-import-map failed");
   }
 });
