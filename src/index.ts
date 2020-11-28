@@ -7,8 +7,8 @@ interface PluginOptions {
   url: {
     prod: string;
     dev?: string;
-  } | undefined;
-  extensions?: string[];
+  }, 
+  extensions?: string[]
 }
 
 const name = 'snowpack-plugin-remote-import-map'
@@ -18,14 +18,12 @@ const plugin = (
   pluginOptions: PluginOptions,
 ): SnowpackPlugin => {
   const { url, extensions = [".js", ".jsx", ".tsx", ".ts"] } =
-    pluginOptions as PluginOptions;
-  if (!url?.prod) throw new Error("url.prod is required!");
-
+    pluginOptions;
   return {
     name,
     async transform({ contents, fileExt, isDev }) {
       contents = contents.toString();
-      const remoteImportMapUrl = isDev && url.dev ? url.dev : url.prod;
+      const remoteImportMapUrl = isDev && url?.dev ? url.dev : url.prod;
       let remoteImports: Imports = {};
 
       try {
