@@ -1,6 +1,13 @@
 {
   "name": "snowpack-plugin-remote-import-map",
+  "description": "Load remote import maps via URL to compile into snowpack projects.",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filoxo/snowpack-plugin-remote-import-map.git"
+  },
+  "bugs": "https://github.com/filoxo/snowpack-plugin-remote-import-map/issues",
+  "keywords": ["snowpack", "snowpack-plugin", "import map", "remote", "imports"],
   "license": "MIT",
   "scripts": {
     "build": "pika build",
