@@ -6,7 +6,8 @@ import { requestJSON } from "./request";
 type PluginOptions = {
   url: string,
   devUrl?: string,
-  extensions?: string[]
+  extensions?: string[],
+  strict?: boolean
 }
 
 const name = 'snowpack-plugin-remote-import-map'
@@ -15,7 +16,7 @@ const plugin = (
   _snowpackConfig: any,
   pluginOptions: PluginOptions,
 ): SnowpackPlugin => {
-  const { url, devUrl, extensions = [".js", ".jsx", ".tsx", ".ts"] } =
+  const { url, devUrl, extensions = [".js", ".jsx", ".tsx", ".ts"], strict } =
     pluginOptions;
   return {
     name,
@@ -25,7 +26,7 @@ const plugin = (
       let remoteImports: Imports = {};
 
       try {
-        remoteImports = (await requestJSON(remoteImportMapUrl)).imports;
+        remoteImports = (await requestJSON(remoteImportMapUrl, { strict })).imports;
       } catch (e) {
         throw new Error(`${name} failed: ${e.message}`);
       }

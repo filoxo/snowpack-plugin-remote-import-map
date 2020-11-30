@@ -33,11 +33,12 @@ After this, run your project's start command. This plugin will download the impo
 
 ### Options
 
-| name       | type     | default                          | description                                                                                                  |
-| ---------- | -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| url        | string   | (required)                       | URL string where the remote import map will be loaded from                                                   |
-| devUrl     | string   | `undefined`                      | URL string where the dev version of the remote import map will be loaded from in `devMode` only              |
-| extensions | string[] | `[".js", ".jsx", ".tsx", ".ts"]` | [Snowpack file extensions](https://www.snowpack.dev/guides/plugins#tips-%2F-gotchas) to run the transform on |
+| name       | type     | default                          | description                                                                                                                                                                                                                                                         |
+| ---------- | -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url        | string   | (required)                       | URL string where the remote import map will be loaded from                                                                                                                                                                                                          |
+| devUrl     | string   | `undefined`                      | URL string where the dev version of the remote import map will be loaded from in `devMode` only                                                                                                                                                                     |
+| extensions | string[] | `[".js", ".jsx", ".tsx", ".ts"]` | [Snowpack file extensions](https://www.snowpack.dev/guides/plugins#tips-%2F-gotchas) to run the transform on                                                                                                                                                        |
+| strict     | boolean  | false                            | [Import maps sould have a MIME type of `application/importmap+json` per the spec](https://github.com/WICG/import-maps#installation) but this plugin will not enforce that until adoption progresses. Set this to `true` if you'd like to better adhere to the spec. |
 
 #### Alternatives
 
