@@ -48,11 +48,14 @@ See also [snowpack-plugin-import-map](https://github.com/zhoukekestar/snowpack-p
 1. Clone repo
 1. Run `yarn install`
 1. Build project `yarn build`
-1. Link project locally `yarn link-pkg`
-1. Serve local import map `yarn serve:import-map`
+1. Link project locally `yarn pkg:link`
+1. Serve local import map `yarn serve:import-map` if you don't have a remote one to make requests to
 1. Install in test project `yarn link snowpack-plugin-remote-import-map`
 1. Start test project `yarn start`
+1. To clean up, run:
+   - `yarn unlink snowpack-plugin-remote-import-map` in test project (or just `yarn install` which clears local links)
+   - `yarn pkg:unlink` in this project
 
 ### Testing
 
-Run `yarn test`
+1. Run `yarn test`
