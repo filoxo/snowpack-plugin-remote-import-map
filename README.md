@@ -9,7 +9,7 @@
 ```sh
 yarn add -D snowpack-plugin-remote-import-map
 # or
-npm i -S snowpack-plugin-remote-import-map
+npm i -D snowpack-plugin-remote-import-map
 ```
 
 ### Configuration
